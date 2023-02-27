@@ -1,5 +1,6 @@
 package org.example.intializers;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -17,10 +18,12 @@ public class JdaInitializers {
     private JDA jda;
 
     public void bot() throws LoginException, InterruptedException {
-        String token = "MTAxMDU4OTkxNzYzMTUwMDM4Mw.G0nfF6.fN6OVnUthbc3vsAbzvoXw6PZYfu7Gbjnwa_-LA";
+        Dotenv dotenv = Dotenv.configure().filename("token").load();
+        String token = dotenv.get("TOKEN");
+        System.out.println(token);
         jda = JDABuilder.createDefault(token)
                 .enableIntents(EnumSet.allOf(GatewayIntent.class))
-                .setActivity(Activity.playing("With your mom's pussy"))
+                .setActivity(Activity.playing("MINECRAFT"))
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .build().awaitReady();
     }

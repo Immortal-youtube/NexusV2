@@ -1,12 +1,14 @@
 package org.example.JdaUtils;
 
-public class Roles {
+import io.github.cdimascio.dotenv.Dotenv;
 
-    private final String Member = System.getenv("MEMBER");
-    private final String God = System.getenv("GOD");
-    private final String Badboy = System.getenv("BADBOY");
-    private final String Coders = System.getenv("CODERS");
-    private final String Nerd = System.getenv("NERD");
+public class Roles {
+    Dotenv dotenv = Dotenv.configure().filename("token").load();
+    private final String Member = dotenv.get("MEMBER");
+    private final String God = dotenv.get("GOD");
+    private final String Badboy = dotenv.get("BADBOY");
+    private final String Coders = dotenv.get("CODERS");
+    private final String Nerd = dotenv.get("NERD");
 
     public String getMember() {
         return Member;

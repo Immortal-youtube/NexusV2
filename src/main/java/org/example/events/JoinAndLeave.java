@@ -1,5 +1,6 @@
 package org.example.events;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -16,8 +17,9 @@ public class JoinAndLeave extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+        Dotenv dotenv = Dotenv.configure().filename("token").load();
         event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(roles.getMember())).queue();
-        TextChannel channel = event.getGuild().getTextChannelById(System.getenv("WELCOME"));
+        TextChannel channel = event.getGuild().getTextChannelById(dotenv.get("WELCOME"));
         EmbedBuilder builder = new EmbedBuilder();
         builder.setThumbnail(event.getMember().getAvatarUrl());
         builder.setTitle(String.format("Welcome %s",event.getMember().getEffectiveName()));

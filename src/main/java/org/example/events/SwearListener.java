@@ -1,5 +1,6 @@
 package org.example.events;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -13,7 +14,8 @@ public class SwearListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        List<String> choices = Arrays.stream(System.getenv("SUS_ARRAY").split(",")).toList();
+        Dotenv dotenv = Dotenv.configure().filename("token").load();
+        List<String> choices = Arrays.stream(dotenv.get("SUS_ARRAY").split(",")).toList();
         String msg = event.getMessage().getContentRaw();
         TextChannel channel = event.getChannel().asTextChannel();
         for(String choice : choices){
